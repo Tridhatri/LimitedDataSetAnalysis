@@ -1,0 +1,37 @@
+# System
+.DS_Store
+
+# Large raw datasets (too large for git)
+datasets/ds2os/archive/mainSimulationAccessTraces.csv
+datasets/ds2os/archive/periodicityDataset.csv
+notebook/dataset/
+datasets/ds2os/archive.zip
+datasets/ds2os/
+
+# Unrelated datasets
+datasets/100-patients/
+datasets/100-patients.zip
+datasets/EHR Dataset for Patient Treatment Classification/
+datasets/EHR Dataset for Patient Treatment Classification.zip
+
+# Reference PDFs / books (not research output)
+*.pdf
+*.zip
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# SDV tutorial samples (not research)
+SDV/
+
+# Scratch / unrelated notebooks
+notebook/Untitled.ipynb
+task2.ipynb
+knn-notebook.ipynb
+
+# Generated interactive figures (reproducible from notebook)
+notebook/iframe_figures/
+
+# Misc
+test.xlsx
+train.xlsx
