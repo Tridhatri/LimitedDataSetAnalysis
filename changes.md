@@ -35,6 +35,30 @@
 - Missing columns: `Timestamp` and `Normality` (the target variable)
 - **Fix:** Added descriptions for both columns after "Value" in the paper's column listing
 
+## Task 2b: Evaluation Methodology Fix
+**File:** `notebook/Notebook-1.ipynb` — Cells 59, 81, 100, 113
+
+- Previous fix (Task 2) split concatenated data into train/test — but this tests on mixed real+synthetic, which isn't the right question
+- **Correct methodology:** Train on augmented data (real_train + synthetic), test on **held-out real-only test set** (X_test/y_test from Cell 42)
+- This measures: "Does adding synthetic data help models perform better on real-world data?"
+- **Fix:** Replaced eval cells to use `X_aug`/`y_aug` for training, `X_test`/`y_test` from Cell 42 for testing
+
+### Results (train on real+synthetic, test on real holdout):
+
+| Model | Baseline (real only) | GaussianCopula | CTGAN | TVAE | CopulaGAN |
+|---|---|---|---|---|---|
+| Logistic Regression | 0.9696 | 0.5791 | 0.5179 | 0.5970 | 0.4998 |
+| Decision Tree | 0.9997 | 0.7572 | 0.6467 | 0.9102 | 0.6259 |
+| Random Forest | 1.0000 | 0.8344 | 0.6913 | 0.9358 | 0.6804 |
+| SGD Classifier | 0.9696 | 0.6004 | 0.0583 | 0.2530 | 0.1779 |
+| Bagging Classifier | 0.9998 | 0.8152 | 0.6750 | 0.9288 | 0.6630 |
+
+**Findings:**
+- All synthesizers hurt real-world performance — no augmented model beats baseline
+- TVAE is the best synthesizer (closest to baseline), not GaussianCopula as paper claimed
+- CTGAN and CopulaGAN perform worst (CopulaGAN is also mislabeled — runs CTGAN)
+- SGD legitimately struggles with synthetic augmentation but no longer shows contradictory metrics
+
 ---
 
 ## Pending
