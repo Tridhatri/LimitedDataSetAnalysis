@@ -59,6 +59,37 @@
 - CTGAN and CopulaGAN perform worst (CopulaGAN is also mislabeled — runs CTGAN)
 - SGD legitimately struggles with synthetic augmentation but no longer shows contradictory metrics
 
+## Task 7: Smart Balancing — Per-Class Synthesis (Approach 2)
+**Files:** `notebook/Notebook-1.ipynb` (Cells 49-118), `Limited DataSet Analysis using SDV.docx`
+
+### Problem
+Naive concatenation of synthetic data (Approach 1) hurt model performance because:
+- Synthesizers learned from only ~1,099 mixed anomalous rows
+- Generated 25k-50k synthetic rows (25-50x amplification) overwhelming real data patterns
+
+### Notebook changes
+- **Synthesis cells (49, 67, 89, 103):** Now train a separate synthesizer per minority class and generate only enough rows to reach 5,000 per class
+- **Balance cells (58, 78, 97, 112):** Downsample normal class from 38,901 to 5,000, creating perfectly balanced 40,000-row dataset
+- **Eval cells (59+61, 81+84, 100+104, 113+118):** Train on balanced augmented data, test on real holdout + per-class recall analysis
+- **Bug fix:** Cell 103 now uses CopulaGANSynthesizer instead of mislabeled CTGANSynthesizer
+
+### Paper changes
+- Renamed existing results to "4.1 Approach 1: Naive Concatenation of Synthetic Data"
+- Added new section "4.2 Approach 2: Smart Balancing with Per-Class Synthesis" with per-class recall table and findings
+
+### Per-class recall results (Random Forest):
+
+| Attack Type | Support | Baseline | GC | CTGAN | TVAE | CopulaGAN |
+|---|---|---|---|---|---|---|
+| Scan | 50 | 0.9600 | 0.9800 | **1.0000** | 0.9800 | **1.0000** |
+| Macro Average | | 0.9888 | 0.9911 | 0.9930 | 0.9912 | **0.9934** |
+
+**Key wins:**
+- Scan detection: 96% → 100% (CTGAN, CopulaGAN)
+- Macro recall improved across all synthesizers
+- CopulaGAN best macro avg (0.9934), followed by CTGAN (0.9930)
+- Minimal tradeoff: Normal recall drops only 0.0004-0.0057
+
 ---
 
 ## Pending
