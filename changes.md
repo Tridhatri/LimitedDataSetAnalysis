@@ -126,18 +126,29 @@ Approaches 1 and 2 used the full 50,000-row dataset where baseline models alread
 
 ---
 
-## Pending
+## Task 6: Draft Placeholders and Garbled Text — COMPLETED ✅
+**File:** `Limited DataSet Analysis using SDV.docx`
 
-### Task 3: GAN vs Gaussian Copula Contradiction
-- Section 2.2.7 claims GANs are "primarily used" but conclusion says GaussianCopula (not a GAN) performed best
-- CopulaGANSynthesizer section in both notebooks actually runs CTGANSynthesizer — mislabeled
+- **Section 1.3 (para 14):** Replaced "-talk about ChaptGPT n all here." with proper paragraph about generative AI, ChatGPT, DALL-E, and their relevance to synthetic data generation
+- **Section 1.5 (para 35):** Removed garbled "Alsonegative ae" from end of paragraph
+- **Section 5 (para 407):** Replaced "(insert reasons here)" with actual reasons: privacy regulations, sensitive nature of security incidents, high cost of labeled data collection, and rarity of certain attack types
+- **Related Work (paras 192, 193, 195):** Removed [Link] hyperlink placeholders, reformatted citations with "et al."
 
-### Task 5: Misleading Balance Improvement Claim
-- Paper presents 97.03% to 77.63% normal as a success, but dataset is still heavily imbalanced
-- The 77.63% figure only comes from the concatenation step in Notebook-1.ipynb; Notebook-1-Copy1.ipynb stays at ~97.3%
+## Task 3: GAN vs Gaussian Copula Contradiction — COMPLETED ✅
+**File:** `Limited DataSet Analysis using SDV.docx`
 
-### Task 6: Draft Placeholders and Garbled Text
-- Section 1.3: "-talk about ChaptGPT n all here."
-- Section 1.5: "Alsonegative ae."
-- Section 5 (Conclusion): "(insert reasons here)"
-- Related Work: Multiple [Link] placeholders instead of actual citations
+- **Section 2.2.7 (para 176):** Replaced misleading claim "Generative Adversarial Networks (GANs) are used primarily for this task" with accurate description listing all 4 synthesizer types (GaussianCopula, CTGAN, CopulaGAN, TVAE) and their respective approaches
+- CopulaGAN mislabeling in notebook code was already fixed in Task 7 (cell 103 now uses CopulaGANSynthesizer)
+
+## Task 5: Misleading Balance Improvement Claim — COMPLETED ✅
+**File:** `Limited DataSet Analysis using SDV.docx`
+
+- **Para 257:** Replaced misleading "better distribution" claim (97.03% → 77.63%) with honest assessment: dataset remains significantly imbalanced after naive concatenation, this approach degrades performance (Section 4.1), and directs readers to the effective approaches (Sections 4.2 and 4.3)
+
+## Conclusion Rewrite
+**File:** `Limited DataSet Analysis using SDV.docx`
+
+- Rewrote Section 5 (Conclusion and Discussion) to reflect all 3 approaches and their findings
+- Summarizes: Approach 1 (naive concatenation hurts), Approach 2 (smart balancing gives marginal gains on full dataset), Approach 3 (dramatic improvement on limited dataset)
+- 4 key conclusions: (1) synthetic data most valuable when data is genuinely limited, (2) augmentation strategy matters critically, (3) GaussianCopula performs best especially in limited data regime, (4) tree-based models are most robust
+- Added future work direction: multi-table datasets, fraud detection, medical diagnosis
