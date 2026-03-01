@@ -79,16 +79,18 @@ Naive concatenation of synthetic data (Approach 1) hurt model performance becaus
 
 ### Per-class recall results (Random Forest):
 
+*Note: These were the original results from the first run. After re-running with restored cleaned_data.csv, baseline is 1.0000 across all classes (see "Paper Alignment Fix" below).*
+
 | Attack Type | Support | Baseline | GC | CTGAN | TVAE | CopulaGAN |
 |---|---|---|---|---|---|---|
-| Scan | 50 | 0.9600 | 0.9800 | **1.0000** | 0.9800 | **1.0000** |
-| Macro Average | | 0.9888 | 0.9911 | 0.9930 | 0.9912 | **0.9934** |
+| All classes | | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 1.0000 |
+| Normal | 9732 | 1.0000 | 0.9960 | 0.9905 | 0.9992 | 0.9944 |
+| Macro Average | | 1.0000 | 0.9995 | 0.9988 | 0.9999 | 0.9993 |
 
-**Key wins:**
-- Scan detection: 96% → 100% (CTGAN, CopulaGAN)
-- Macro recall improved across all synthesizers
-- CopulaGAN best macro avg (0.9934), followed by CTGAN (0.9930)
-- Minimal tradeoff: Normal recall drops only 0.0004-0.0057
+**Key finding:**
+- At 50k rows, baseline is already near-perfect — smart balancing preserves performance but offers no practical improvement
+- TVAE best macro avg (0.9999), followed by GaussianCopula (0.9995)
+- Normal recall drops 0.0008–0.0095 (minimal tradeoff)
 
 ## Task 8: Approach 3 — True Limited Data Simulation
 **Files:** `notebook/Approach3-LimitedDataSimulation.ipynb` (NEW), `Limited DataSet Analysis using SDV.docx`
@@ -152,3 +154,13 @@ Approaches 1 and 2 used the full 50,000-row dataset where baseline models alread
 - Summarizes: Approach 1 (naive concatenation hurts), Approach 2 (smart balancing gives marginal gains on full dataset), Approach 3 (dramatic improvement on limited dataset)
 - 4 key conclusions: (1) synthetic data most valuable when data is genuinely limited, (2) augmentation strategy matters critically, (3) GaussianCopula performs best especially in limited data regime, (4) tree-based models are most robust
 - Added future work direction: multi-table datasets, fraud detection, medical diagnosis
+
+## Paper Alignment Fix: Approach 2 Numbers Updated
+**File:** `Limited DataSet Analysis using SDV.docx`
+
+- **Problem:** Paper's Approach 2 table (Section 4.2) contained numbers from an earlier run where baseline Scan recall was 0.9600 and macro was 0.9888. Current notebook outputs show baseline macro recall 1.0000 (all classes 1.0000), because at 50,000 rows the Random Forest model is already near-perfect.
+- **Approach 2 table updated:** Baseline Scan 0.9600→1.0000, Malicious Control 0.9500→1.0000, Macro 0.9888→1.0000. Synthesizer macro averages updated: GC 0.9995, CTGAN 0.9988, TVAE 0.9999, CopulaGAN 0.9993. Normal class values recomputed from macro averages.
+- **Key findings rewritten:** Now honestly states baseline is already near-perfect at 50k rows; smart balancing preserves (not improves) performance; motivates Approach 3 as the true validation.
+- **Conclusion summary table updated:** Approach 2 key finding updated to reflect negligible practical gain at this scale.
+- **Approach 1 chart (Figure 1) inserted** into paper before Section 4.2, with caption.
+- **Figure numbering updated:** Approach 2 chart → Figure 2, Approach 3 chart → Figure 3.
