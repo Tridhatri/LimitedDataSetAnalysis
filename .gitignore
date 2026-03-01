@@ -32,7 +32,16 @@ knn-notebook.ipynb
 # Generated interactive figures (reproducible from notebook)
 notebook/iframe_figures/
 
+# Removed from tracking (unnecessary/duplicates)
+notebook/cleaned_sampled_data.csv
+notebook/Notebook-1-Copy1.ipynb
+notebook/Diagrams.ipynb
+notebook/diagrams/.$limited_data_set_analysis.drawio.bkp
+notebook/diagrams/download.png
+notebook/diagrams/limited data set analysis.drawio
+
 # Misc
 test.xlsx
 train.xlsx
 session-history.md
+for_my_understanding.md
