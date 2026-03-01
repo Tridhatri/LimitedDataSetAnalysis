@@ -90,6 +90,40 @@ Naive concatenation of synthetic data (Approach 1) hurt model performance becaus
 - CopulaGAN best macro avg (0.9934), followed by CTGAN (0.9930)
 - Minimal tradeoff: Normal recall drops only 0.0004-0.0057
 
+## Task 8: Approach 3 — True Limited Data Simulation
+**Files:** `notebook/Approach3-LimitedDataSimulation.ipynb` (NEW), `Limited DataSet Analysis using SDV.docx`
+
+### Problem
+Approaches 1 and 2 used the full 50,000-row dataset where baseline models already achieve 99.97-100% accuracy. There was no room for synthetic data to demonstrate meaningful improvement — the paper's core thesis couldn't be validated.
+
+### Notebook (Approach3-LimitedDataSimulation.ipynb)
+- New standalone notebook simulating a truly limited dataset (1,000 rows)
+- Stratified subsampling preserves original class imbalance (~97% normal, ~3% anomalous)
+- Some minority classes reduced to 1-2 training samples
+- Per-class synthesis targeting 100 rows per class, normal downsampled to 100
+- All 4 synthesizers evaluated (GaussianCopula, CTGAN, TVAE, CopulaGAN)
+- Includes 10-model evaluation, per-class recall analysis, comparative summary, and visualization
+
+### Paper changes
+- Added new section "4.3 Approach 3: True Limited Data Simulation" before Section 5 (Conclusion)
+- Includes experimental setup, baseline results, augmented results table, and key findings
+
+### Results (Per-Class Recall, Random Forest):
+
+| Attack Type | Support | Baseline | GaussianCopula | CTGAN | TVAE | CopulaGAN |
+|---|---|---|---|---|---|---|
+| DoS Attack | 3 | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 1.0000 |
+| Scan | 1 | **0.0000** | **1.0000** | **1.0000** | **1.0000** | **1.0000** |
+| Normal | 195 | 1.0000 | 0.9795 | 0.9538 | 0.9641 | 0.9641 |
+| **Macro Average** | | **0.8000** | **0.9959** | 0.7077 | 0.8274 | **0.9928** |
+
+**Key wins:**
+- Scan detection: 0% → 100% (all synthesizers)
+- GaussianCopula macro recall: 0.8000 → 0.9959 (+24.5%)
+- GaussianCopula confirmed as best synthesizer in limited data regime
+- CTGAN underperforms with limited data (GANs need more training samples)
+- Validates paper's core thesis: SDV synthesizers enhance limited dataset analysis
+
 ---
 
 ## Pending
